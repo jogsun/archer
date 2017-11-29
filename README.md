@@ -2,8 +2,8 @@
 基于inception的自动化SQL操作平台
 
 ### 开发语言和推荐环境：
-python：3.4<br/>
-django：1.8.17<br/>
+python：3.6<br/>
+django：1.8.18<br/>
 mysql : 5.6及以上<br/>
 linux : 64位linux操作系统均可
 
@@ -35,18 +35,15 @@ linux : 64位linux操作系统均可
 
 ### 安装步骤：
 1. 环境准备：<br/>
-(1)克隆代码到本地: git clone https://github.com/jly8866/archer.git  或  下载zip包<br/>
+(1)克隆代码到本地: 
+ git clone https://github.com/jly8866/archer.git
 (2)安装mysql 5.6实例，请注意保证mysql数据库默认字符集为utf8或utf8mb4<br/>
 (3)安装inception<br/>
-2. 安装python3：(强烈建议使用virtualenv或venv等单独隔离环境！)<br/>
-tar -xzvf Python-3.4.1.tar.gz <br/>
-cd Python-3.4.1 <br/>
-./configure --prefix=/path/to/python3 && make && make install
-或者rpm、yum、binary等其他安装方式
+2. 安装python3和pip3：(强烈建议使用virtualenv或venv等单独隔离环境！)<br/>
+ yum install python36u python36u-pip python36u-libs python36u-devel python36u-setuptools
 3. 安装所需相关模块：<br/>
 (1)django：<br/>
-tar -xzvf Django-1.8.17 && cd Django-1.8.17 && python3 setup.py install<br/>
-或者pip3 install Django==1.8.17<br/>
+pip3 install Django==1.8.18<br/>
 (2)Crypto:<br/>
 pip3 install Crypto<br/>
 pip3 install pycrypto
@@ -55,15 +52,16 @@ pip3 install pymysql<br/>
 记得确保settings.py里有如下两行：<br/>
 import pymysql<br/>
 pymysql.install_as_MySQLdb()<br/>
-由于python3使用的pymysql模块里并未兼容inception返回的server信息，因此需要编辑/path/to/python3/lib/python3.4/site-packages/pymysql/connections.py：<br/>
+由于python3使用的pymysql模块里并未兼容inception返回的server信息，因此需要编辑/usr/lib64/python3.6/site-packages/pymysql/connections.py：<br/>
 在if int(self.server_version.split('.', 1)[0]) >= 5: 这一行之前加上以下这一句并保存，记得别用tab键用4个空格缩进：<br/>
-self.server_version = '5.6.24-72.2-log'<br/>
+self.server_version = '5.7.19-17-29.22-log'<br/>
 最后看起来像这样：<br/>
 ![image](https://github.com/jly8866/archer/raw/master/screenshots/pymysql.png)<br/>
 5. 创建archer本身的数据库表：<br/>
 (1)修改archer/archer/settings.py所有的地址信息,包括DATABASES和INCEPTION_XXX部分<br/>
-(2)通过model创建archer本身的数据库表, 记得先去archer数据库里CREATE DATABASE<br/>
-python3 manage.py makemigrations或python3 manage.py makemigrations sql<br/>
+(2)通过model创建archer本身的数据库表, 记得先去archer数据库里CREATE DATABASE,然后执行以下语句<br/>
+python3 manage.py makemigrations<br/>
+python3 manage.py makemigrations sql<br/>
 python3 manage.py migrate<br/>
 执行完记得去archer数据库里看表是否被创建了出来<br/>
 6. mysql授权:<br/>
