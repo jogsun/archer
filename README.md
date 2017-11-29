@@ -36,11 +36,11 @@ linux : 64位linux操作系统均可
 ### 安装步骤：
 1. 环境准备：<br/>
 (1)克隆代码到本地: 
- git clone https://github.com/jly8866/archer.git
+ git clone https://github.com/jly8866/archer.git<br/>
 (2)安装mysql 5.6实例，请注意保证mysql数据库默认字符集为utf8或utf8mb4<br/>
 (3)安装inception<br/>
 2. 安装python3和pip3：(强烈建议使用virtualenv或venv等单独隔离环境！)<br/>
- yum install python36u python36u-pip python36u-libs python36u-devel python36u-setuptools
+ yum install python36u python36u-pip python36u-libs python36u-devel python36u-setuptools<br/>
 3. 安装所需相关模块：<br/>
 (1)django：<br/>
 pip3 install Django==1.8.18<br/>
@@ -59,7 +59,12 @@ self.server_version = '5.7.19-17-29.22-log'<br/>
 ![image](https://github.com/jly8866/archer/raw/master/screenshots/pymysql.png)<br/>
 5. 创建archer本身的数据库表：<br/>
 (1)修改archer/archer/settings.py所有的地址信息,包括DATABASES和INCEPTION_XXX部分<br/>
-(2)通过model创建archer本身的数据库表, 记得先去archer数据库里CREATE DATABASE,然后执行以下语句<br/>
+(2)通过model创建archer本身的数据库表, 记得先去archer所在数据库服务里配置：
+CREATE DATABASE archer<br/>
+并授权：<br/>
+GRANT SELECT,INSERT,UPDATE,DELETE,ALTER,INDEX,CREATE,REFERENCES ON archer.* TO archer_rw@'xxx.xxx.xxx.xxx' identified by '123345';<br/>
+FLUSH PRIVILEGES;
+然后执行以下命令:<br/>
 python3 manage.py makemigrations<br/>
 python3 manage.py makemigrations sql<br/>
 python3 manage.py migrate<br/>
