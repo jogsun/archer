@@ -59,11 +59,11 @@ self.server_version = '5.7.19-17-29.22-log'<br/>
 ![image](https://github.com/jly8866/archer/raw/master/screenshots/pymysql.png)<br/>
 5. 创建archer本身的数据库表：<br/>
 (1)修改archer/archer/settings.py所有的地址信息,包括DATABASES和INCEPTION_XXX部分<br/>
-(2)通过model创建archer本身的数据库表, 记得先去archer所在数据库服务里配置：
-CREATE DATABASE archer<br/>
+(2)通过model创建archer本身的数据库表, 记得先去archer所在数据库服务里配置：<br/>
+CREATE DATABASE archer;<br/>
 并授权：<br/>
 GRANT SELECT,INSERT,UPDATE,DELETE,ALTER,INDEX,CREATE,REFERENCES ON archer.* TO archer_rw@'xxx.xxx.xxx.xxx' identified by '123345';<br/>
-FLUSH PRIVILEGES;
+FLUSH PRIVILEGES;<br/>
 然后执行以下命令:<br/>
 python3 manage.py makemigrations<br/>
 python3 manage.py makemigrations sql<br/>
